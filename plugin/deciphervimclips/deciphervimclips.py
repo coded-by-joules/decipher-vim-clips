@@ -58,7 +58,6 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
 
     return element
 
-
 def cell_factory(selection, cellType, prefix='', attrs=None):
     """Return a series of xml v2-Cells as a list of strings
 
@@ -89,9 +88,9 @@ def cell_factory(selection, cellType, prefix='', attrs=None):
                 label = prefix + label
         else:
             label = prefix + str(i + 1)
+
         cells.append(cellTemplate %
                      dict(cellType=cellType, label=label, cell=cell))
-
     attrs_str = " ".join('%s="%s"' % (k, v) for k, v in attrs.items())
 
     if attrs_str:

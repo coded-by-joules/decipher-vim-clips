@@ -86,6 +86,7 @@ vmap <leader>na  <Esc>:call NoAnswer()<CR>
 vmap <leader>ca  <Esc>:call Case()<CR>
 vmap <leader>avl <Esc>:call AddValuesLow()<CR>
 vmap <leader>avh <Esc>:call AddValuesHigh()<CR>
+vmap <leader>avm <Esc>:call MatchLabelsAsValues()<CR>
 vmap <leader>ag  <Esc>:call AddGroups()<CR>
 vmap <leader>aa  <Esc>:call AddAlts()<CR>
 vmap <leader>qc  <Esc>:call CommentQuestion()<CR>
@@ -148,7 +149,6 @@ except Exception as e:
     print(e)
 EOF
 endfunction
-
 
 function! Cols()
 exec s:python_until_eof_range
@@ -396,6 +396,15 @@ try:
 
     commands.AddValuesHigh()
 
+except Exception as e:
+    print(e)
+EOF
+endfunction
+
+function! MatchLabelsAsValues()
+exec s:python_until_eof_range
+try:
+    commands.MatchLabelsAsValues()
 except Exception as e:
     print(e)
 EOF

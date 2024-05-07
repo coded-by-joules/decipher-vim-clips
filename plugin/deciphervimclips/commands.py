@@ -105,7 +105,6 @@ def Rows():
     """
     set_current_range( deciphervimclips.cell_factory( get_current_range(), "row", "r" ) + ['\n'] )
 
-
 def Cols():
     """
     Makes ``col`` Cells with vrange lines as text nodes
@@ -251,8 +250,8 @@ def MakeRadio():
     hasRow = questionText.find('<row') != -1
     hasCol = questionText.find('<col') != -1
 
-    comment1D = "Please select one"
-    comment2D = "Please select one for each row"
+    comment1D = "@(hInstrText_s)"
+    comment2D = "@(hInstrText_g)"
 
     if hasRow and hasCol:
         comment = comment2D
@@ -273,7 +272,7 @@ def MakeCheckbox():
     """
     """
     position = position_cursor(3, 999)
-    comment = "Please select all that apply"
+    comment = "@(hInstrText_m)"
     attrs = dict(atleast=1)
     element = deciphervimclips.element_factory(get_current_range(),
                                         attrs=attrs,
@@ -296,8 +295,8 @@ def MakeSelect():
     hasRow = questionText.find('<row') != -1
     hasCol = questionText.find('<col') != -1
 
-    comment1D = "Please select one"
-    comment2D = "Please select one for each selection"
+    comment1D = "@(hInstrText_s)"
+    comment2D = "@(hInstrText_g)"
 
     if hasRow or hasCol:
         comment = comment2D
@@ -320,7 +319,7 @@ def MakeNumber():
     """
     position = position_cursor(4, 999)
     attrs = dict(size=3, optional=0)
-    comment = "Please enter a whole number"
+    comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     elType="number",
@@ -335,7 +334,7 @@ def MakeFloat():
     """
     position = position_cursor(4, 999)
     attrs = dict(size=3, optional=0)
-    comment = "Please enter a number"
+    comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     elType="float",
@@ -350,7 +349,7 @@ def MakeText():
     """
     position = position_cursor(3, 999)
     attrs = dict(optional=0)
-    comment = "Please be as specific as possible"
+    comment = "@(hInstrText_o)"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     elType="text",
@@ -365,8 +364,8 @@ def MakeTextarea():
     """
     """
     position = position_cursor(3, 999)
-    comment = "Please be as specific as possible"
     attrs = dict(optional=0)
+    comment = "@(hInstrText_o)"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     attrs=attrs,
@@ -404,8 +403,8 @@ def MakeRating():
     hasRow = questionText.find('<row') != -1
     hasCol = questionText.find('<col') != -1
 
-    comment1D = "Please select one"
-    comment2D = "Please select one for each row"
+    comment1D = "@(hInstrText_s)"
+    comment2D = "@(hInstrText_g)"
 
     if hasRow and hasCol:
         comment = comment2D
@@ -625,6 +624,31 @@ def AddValuesHigh():
 
     set_current_range( output )
 
+def MatchLabelsAsValues():
+    """
+    Adds value attributes to cells that match their labels
+
+    .. code-block::xml
+
+        <col label="c1">Not at all Spammy<br/>3</col>
+        <col label="c2">2</col>
+        <col label="c3">Very Spammy<br/>1</col>
+
+        <col label="c1" value="1">Not at all Spammy<br/>3</col>
+        <col label="c2" value="2">2</col>
+        <col label="c3" value="3">Very Spammy<br/>1</col>
+    """
+    output = []
+    for line in get_current_range():
+        if 'label' in line and '>' in line:
+            parts = re.split(r"[\'\"]", line)
+            label = re.split(r"r|ch|c", parts[1])
+            output.append(line.replace('>', ' value="%s">' % label[1], 1))
+
+        else:
+            output.append(line)
+
+    set_current_range(output)
 
 def Switcher():
     """
@@ -802,7 +826,7 @@ def CleanNotes():
 
         <!-- XXX [Q1]: The parrot is dead! -->
 
-        [Q1]: The parrot is dead! 
+        [Q1]: The parrot is dead!
     """
     vbuffer = vim.current.buffer[:]
     comment_rgx = re.compile(r'.*XXX \[(?P<label>[^\]]+)\]: (?P<note>.*) -->')
