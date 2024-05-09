@@ -273,9 +273,9 @@ def MakeCheckbox():
     """
     position = position_cursor(3, 999)
     comment = "@(hInstrText_m)"
-    attrs = dict(atleast=1)
+    #attrs = dict(atleast=1)
     element = deciphervimclips.element_factory(get_current_range(),
-                                        attrs=attrs,
+                                        #attrs=attrs,
                                         elType="checkbox",
                                         comment=comment)
 
@@ -303,10 +303,10 @@ def MakeSelect():
     else:
         comment = comment1D
 
-    attrs = dict(optional=0)
+    #attrs = dict(optional=0)
 
     output = deciphervimclips.element_factory(get_current_range(),
-                                    attrs=attrs,
+                                    #attrs=attrs,
                                     elType="select",
                                     comment=comment)
 
@@ -318,7 +318,7 @@ def MakeNumber():
     """
     """
     position = position_cursor(4, 999)
-    attrs = dict(size=3, optional=0)
+    attrs = dict(size=3)
     comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
@@ -333,7 +333,7 @@ def MakeFloat():
     """
     """
     position = position_cursor(4, 999)
-    attrs = dict(size=3, optional=0)
+    attrs = dict(size=3)
     comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
@@ -348,12 +348,12 @@ def MakeText():
     """
     """
     position = position_cursor(3, 999)
-    attrs = dict(optional=0)
+    #attrs = dict(optional=0)
     comment = "@(hInstrText_o)"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     elType="text",
-                                    attrs=attrs,
+                                    #attrs=attrs,
                                     comment=comment)
 
     set_current_range( output )
@@ -364,11 +364,11 @@ def MakeTextarea():
     """
     """
     position = position_cursor(3, 999)
-    attrs = dict(optional=0)
+    #attrs = dict(optional=0)
     comment = "@(hInstrText_o)"
 
     output = deciphervimclips.element_factory(get_current_range(),
-                                    attrs=attrs,
+                                    #attrs=attrs,
                                     elType="textarea",
                                     comment=comment)
 

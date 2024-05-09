@@ -37,16 +37,36 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
     # dashes and periods become underscores
     label = re.sub(r'[-\.]', '_', label)
 
+    # check if the question will be a hidden variable
+    hiddenQ = "hidden:" in title or "HIDDEN:" in title
+
     template = '\n'.join(("<%(elType)s\n  label=\"%(label)s\"%(extras)s>",
                           "  <title>%(title)s</title>",
                           "%(selection)s",
                           "</%(elType)s>",
                           "<suspend/>"))
+    if hiddenQ:
+        template = '\n'.join(("<%(elType)s\n  label=\"%(label)s\"%(extras)s>",
+                              "  <title>%(title)s</title>",
+                              "  <exec>\n  </exec>",
+                              "%(selection)s",
+                              "</%(elType)s>",
+                              "<suspend/>"))
 
-    if selection.find("<comment") == -1:
+    if selection.find("<comment") == -1 and not hiddenQ:
         selection = "  <comment>%s</comment>\n" % comment + selection
 
     extras = ''
+
+    # add necessary attrs
+    if hiddenQ:
+        attrs["optional"] = 1
+        attrs["where"] = "execute,survey,report"
+    else:
+        if elType in ["text", "textarea", "number", "float"]:
+            attrs["optional"] = 0
+        elif elType in ["checkbox"]:
+            attrs["atleast"] = 1
 
     # if qid starts at "S", add a cs:scr attribute
     if label[0].lower() == 's':
