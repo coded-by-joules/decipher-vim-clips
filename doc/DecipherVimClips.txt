@@ -1,0 +1,88 @@
+*DecipherVimClips.txt*  Plugin for using Decipher CLIPS and snippets in Vim.
+
+DecipherVimClips                                       *decipher-clips* *decipher-vim-clips*
+
+1. Description                        |DecipherVimClips-description|
+1. Usage                              |DecipherVimClips-usage|
+2. Decipher Commands                  |DecipherVimClips-commands|
+    - Questions                       |DecipherVimClips-questions|
+    - Elements                        |DecipherVimClips-elements|
+3. Snippets                           |DecipherVimClips-snippets|
+
+
+==============================================================================
+DESCRIPTION                                             *DecipherVimClips-description*
+
+Decipher Vim Clips is a plugin to easily makegXML elements in Decipher. It
+will transform question and answer formats in plain text into a Decipher XML
+format. Also, the plugin includes a set of snippets for easy additions of
+tags and attributes.
+
+Before using this plugin, make sure is Python is installed in your system.
+
+==============================================================================
+USAGE                                                   *DecipherVimClips-usage*
+                                           *DecipherVimClips-questions*
+Questions~
+
+The following commands must be done in Visual mode.
+>
+Radio Question - <leader>mr >
+
+    Q1. Which is your favorite?
+        <row label="r1">Ham</row>
+        <row label="r2">Spam</row>
+        <row label="r3">Eggs</row>
+>
+will become... >
+
+    <radio label="Q1">
+        <title>What is your favorite?</title>
+        <row label="r1">Ham</row>
+        <row label="r2">Spam</row>
+        <row label="r3">Eggs</row>
+    </radio>
+    <suspend />
+<
+                                                        *DecipherVimClips-elements*
+Elements~
+
+The following commands must be done in Visual mode.
+
+Row Cells - <leader>ro >
+
+    Ham
+    Spam
+    Eggs
+
+will become... >
+
+    <row label="r1">Ham</row>
+    <row label="r2">Spam</row>
+    <row label="r3">Eggs</row>
+
+If a line is numbered/labeled, it will be set as the label attribute... >
+
+    101. Ham
+    102. Spam
+    103. Eggs
+
+will become... >
+
+    <row label="r101">Ham</row>
+    <row label="r102">Spam</row>
+    <row label="r103">Eggs</row>
+
+==============================================================================
+SNIPPETS                                                *DecipherVimClips-snippets*
+
+Below are snippets you can use. You must be in Insert mode and file type must be XML.
+Type the keywords below and press <Tab>
+
+question.after~
+>
+    <style name="question.after" wrap="ready"><![CDATA[
+        var qn = ${jsexport()};
+
+        var $qn = $ ("question_" + qn.label);
+    ]]></style>

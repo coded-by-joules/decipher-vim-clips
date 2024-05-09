@@ -47,6 +47,11 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
         selection = "  <comment>%s</comment>\n" % comment + selection
 
     extras = ''
+
+    # if qid starts at "S", add a cs:scr attribute
+    if label[0].lower() == 's':
+        attrs["cs:scr"] = 1
+
     if attrs:
         extras = '\n  ' + '\n  '.join('%s="%s"' % (k, v) for k, v in attrs.items())
 
