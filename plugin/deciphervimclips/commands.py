@@ -842,3 +842,62 @@ def CleanNotes():
             output.append(line)
 
     vim.current.buffer[:] = output
+
+def BoldText():
+    """
+    """
+    selection = '\n'.join(get_current_range())
+    set_current_range( ["<b>%s</b>" % selection])
+
+def ItalicizeText():
+    """
+    """
+    selection = '\n'.join(get_current_range())
+    set_current_range( ["<i>%s</i>" % selection])
+
+
+def UnderlineText():
+    """
+    """
+    selection = '\n'.join(get_current_range())
+    set_current_range( ["<u>%s</u>" % selection])
+
+def MakeRanksort():
+    """
+    """
+    position = position_cursor(3, 999)
+    questionText = '\n'.join(get_current_range())
+
+    hasRow = questionText.find('<row') != -1
+    hasChoice = questionText.find('<choice') != -1
+
+    if not hasRow or not hasChoice:
+        print("Please have rows and choices setup")
+        return
+
+    comment = "${hlang.get('hInstrText_rd') if device.desktop else hlang.get('hInstrText_rc')}"
+    choiceCount = len([line for line in get_current_range() if "<choice" in line])
+
+    attrs = dict(optional=1,
+                 minRanks=choiceCount,
+                 uses="m3_ranksort.1")
+
+    attrs["ranksort:btnOpenEdit"]="${res.edit}"
+    attrs["ranksort:ranksortContainerCSS"]=""
+    attrs["ranksort:cardsContainerCSS"]=""
+    attrs["ranksort:cardCSS"]="width:188px;height:70px;"
+    attrs["ranksort:bucketsContainerCSS"]="width:188px;"
+    attrs["ranksort:bucketCSS"]="width:188px;height:70px;"
+    attrs["ranksort:bucketTextCSS"]="font-size:14px;"
+    attrs["ranksort:uiDraggableHelperCSS"]="width: 188px; height: 70px;"
+    attrs["ranksort:mobile_noanswerCSS"]="background-color:#fff;color:#191919;margin-top:30px;"
+    attrs["ranksort:noanswerHoverCSS"]="background-color:#023F86;"
+    attrs["ranksort:noanswerCSS"]="background-color:#fff;color:#191919;border:1px solid #023F86;"
+
+    output = deciphervimclips.element_factory(get_current_range(),
+                                    attrs=attrs,
+                                    elType="select",
+                                    comment=comment)
+
+    set_current_range( output )
+    vim.current.window.cursor = position

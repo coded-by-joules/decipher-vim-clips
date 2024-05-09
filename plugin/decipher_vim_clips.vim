@@ -77,6 +77,7 @@ vmap <leader>mn  <Esc>:call MakeNumber()<CR>
 vmap <leader>mf  <Esc>:call MakeFloat()<CR>
 vmap <leader>mt  <Esc>:call MakeText()<CR>
 vmap <leader>ma  <Esc>:call MakeTextarea()<CR>
+vmap <leader>mrs <Esc>:call MakeRanksort()<CR>
 vmap <leader>mh  <Esc>:call MakeHTML()<CR>
 vmap <leader>mv  <Esc>:call MakeRating()<CR>
 vmap <leader>re  <Esc>:call Resource()<CR>
@@ -101,7 +102,9 @@ vmap <leader>cl  <Esc>:call CleanUp()<CR>
 vmap <leader>hr  <Esc>:call HRef()<CR>
 vmap <leader>ml  <Esc>:call MailLink()<CR>
 vmap <leader>as  <Esc>:call AttrSpacing()<CR>
-
+vmap <leader>fb  <Esc>:call BoldText()<CR>
+vmap <leader>fi  <Esc>:call ItalicizeText()<CR>
+vmap <leader>fu  <Esc>:call UnderlineText()<CR>
 
 function! NewSurvey()
 exec s:python_until_eof
@@ -305,6 +308,16 @@ except Exception as e:
 EOF
 endfunction
 
+function! MakeRanksort()
+exec s:python_until_eof_range
+try:
+
+    commands.MakeRanksort()
+
+except Exception as e:
+    print(e)
+EOF
+endfunction
 
 function! MakeHTML()
 exec s:python_until_eof_range
@@ -522,6 +535,32 @@ except Exception as e:
 EOF
 endfunction
 
+function! BoldText()
+exec s:python_until_eof_range
+try:
+    commands.BoldText()
+except Exception as e:
+    print(e)
+EOF
+endfunction
+
+function! ItalicizeText()
+exec s:python_until_eof_range
+try:
+    commands.ItalicizeText()
+except Exception as e:
+    print(e)
+EOF
+endfunction
+
+function! UnderlineText()
+exec s:python_until_eof_range
+try:
+    commands.UnderlineText()
+except Exception as e:
+    print(e)
+EOF
+endfunction
 
 function! SpaceQuote()
 exec s:python_until_eof_range

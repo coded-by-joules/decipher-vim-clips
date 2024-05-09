@@ -58,6 +58,8 @@ snippet reg
 #
 # Survey Elements
 #
+snippet res
+	<res label="${1}">${2}</res>
 snippet exec
 	<exec>
 	${1}
@@ -68,6 +70,14 @@ snippet validate
 	${1}
 	</validate>
 	${2}
+snippet validateOE
+	<validate>
+	OtherSpecify('${1:r996}')
+	</validate>
+snippet validateOELen
+	<validate>
+	checkOthLen(code='${1:r996}', chklen=2, chkdupes=0, chkseq=0)
+	</validate>
 snippet virtual
 	<virtual>
 	${1}
@@ -75,13 +85,20 @@ snippet virtual
 	${2}
 snippet term
 	<term cond="${3:foo}">${1:bar}: ${2:baz}</term>
+snippet softterm
+	<condition label="${1}_term" cond="${2}" />
+	<html label="SoftTerm_${1}" cond="qTesting.r1 and condition.${1}_term" where="survey" translateable="0">
+		\${res.softTerm}<br/><b>${1}</b>
+	</html>
+
+	<term label="termEOS_${1}" cond="condition.${1}_term">${3}</term>
 snippet quota
-	<quota sheet="${1:Quota}"/>
-	${2}
+	<quota sheet="${1:Quota}" label="${2}"/>
 snippet marker
 	<marker name="${1:foo}"/>
 snippet block
 	<block label="${1:label}" randomizeChildren="${2:0}" cond="${3:1}">
+	   ${4}
 	</block>
 	<!-- EO $1 -->
 snippet init
@@ -381,7 +398,7 @@ snippet atmtable
 	  <uses>atmtable.${1:1}</uses>
 	${2}
 snippet autosum
-	  <uses>autosum.${1:1}</uses>
+	  <uses>autosum.${1:5}</uses>
 	  <autosum:preText>${2}</autosum:preText>
 	  <autosum:postText>${3}</autosum:postText>
 	  <autosum:sumPreText>${4:Total:}</autosum:sumPreText>
