@@ -63,7 +63,7 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
         attrs["optional"] = 1
         attrs["where"] = "execute,survey,report"
     else:
-        if elType in ["text", "textarea", "number", "float"]:
+        if elType in ["text", "textarea", "number", "float"] and "optional" not in attrs:
             attrs["optional"] = 0
         elif elType in ["checkbox"]:
             attrs["atleast"] = 1

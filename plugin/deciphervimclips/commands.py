@@ -22,6 +22,17 @@ def position_cursor(start, end):
     # This acts a bit strange with the addition of newlines in elements
     return ( vim.current.range.start + start, end )
 
+def GetRange():
+    buf = vim.current.buffer
+    (lnum1, col1) = buf.mark('<')
+    (lnum2, col2) = buf.mark('>')
+    lines = vim.eval('getline({}, {})'.format(lnum1, lnum2))
+    if len(lines) == 1:
+        lines[0] = lines[0][col1:col2 + 1]
+    else:
+        lines[0] = lines[0][col1:]
+        lines[-1] = lines[-1][:col2 + 1]
+    return "\n".join(lines)
 
 def NewSurvey():
     """
@@ -318,7 +329,8 @@ def MakeNumber():
     """
     """
     position = position_cursor(4, 999)
-    attrs = dict(size=3)
+    attrs = dict(size=3, fwidth=4, verify="range(0,9999)")
+    attrs["ss:postText"] = "${res.}"
     comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
@@ -333,7 +345,8 @@ def MakeFloat():
     """
     """
     position = position_cursor(4, 999)
-    attrs = dict(size=3)
+    attrs = dict(size=3, fwidth=6, range=100)
+    attrs["ss:postText"] = "${res.}"
     comment = "@(hInstrText_n)"
 
     output = deciphervimclips.element_factory(get_current_range(),
@@ -846,21 +859,27 @@ def CleanNotes():
 def BoldText():
     """
     """
-    selection = '\n'.join(get_current_range())
-    set_current_range( ["<b>%s</b>" % selection])
+    selection = GetRange()
+    line = ''.join(get_current_range())
+
+    set_current_range([line.replace(selection, "<b>%s</b>" % selection)])
 
 def ItalicizeText():
     """
     """
-    selection = '\n'.join(get_current_range())
-    set_current_range( ["<i>%s</i>" % selection])
+    selection = GetRange()
+    line = ''.join(get_current_range())
+
+    set_current_range([line.replace(selection, "<i>%s</i>" % selection)])
 
 
 def UnderlineText():
     """
     """
-    selection = '\n'.join(get_current_range())
-    set_current_range( ["<u>%s</u>" % selection])
+    selection = GetRange()
+    line = ''.join(get_current_range())
+
+    set_current_range([line.replace(selection, "<u>%s</u>" % selection)])
 
 def MakeRanksort():
     """
@@ -897,6 +916,41 @@ def MakeRanksort():
     output = deciphervimclips.element_factory(get_current_range(),
                                     attrs=attrs,
                                     elType="select",
+                                    comment=comment)
+
+    set_current_range( output )
+    vim.current.window.cursor = position
+
+def MakePercentage():
+    """
+    """
+    position = position_cursor(3, 999)
+    questionText = '\n'.join(get_current_range())
+
+    hasRow = questionText.find('<row') != -1
+    hasCol = questionText.find('<col') != -1
+
+    if not hasRow:
+        print("Please have rows setup")
+        return
+
+    attrs = dict(optional=1,
+                 uses="autosum.5",
+                 fwidth="3",
+                 amount="100")
+
+    comment = "@(hInstrText_seh)"
+    if hasCol:
+        comment = "@(hInstrText_sehc)"
+        attrs["adim"] = "cols"
+        attrs["grouping"] = "cols"
+
+    attrs["autosum:postText"] = "%"
+    attrs["ss:listDisplay"] = "1"
+
+    output = deciphervimclips.element_factory(get_current_range(),
+                                    attrs=attrs,
+                                    elType="number",
                                     comment=comment)
 
     set_current_range( output )

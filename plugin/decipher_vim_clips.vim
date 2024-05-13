@@ -78,6 +78,7 @@ vmap <leader>mf  <Esc>:call MakeFloat()<CR>
 vmap <leader>mt  <Esc>:call MakeText()<CR>
 vmap <leader>ma  <Esc>:call MakeTextarea()<CR>
 vmap <leader>mrs <Esc>:call MakeRanksort()<CR>
+vmap <leader>mp  <Esc>:call MakePercentage()<CR>
 vmap <leader>mh  <Esc>:call MakeHTML()<CR>
 vmap <leader>mv  <Esc>:call MakeRating()<CR>
 vmap <leader>re  <Esc>:call Resource()<CR>
@@ -313,6 +314,17 @@ exec s:python_until_eof_range
 try:
 
     commands.MakeRanksort()
+
+except Exception as e:
+    print(e)
+EOF
+endfunction
+
+function! MakePercentage()
+exec s:python_until_eof_range
+try:
+
+    commands.MakePercentage()
 
 except Exception as e:
     print(e)

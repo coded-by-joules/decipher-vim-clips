@@ -90,6 +90,7 @@ snippet softterm
 	<html label="SoftTerm_${1}" cond="qTesting.r1 and condition.${1}_term" where="survey" translateable="0">
 		\${res.softTerm}<br/><b>${1}</b>
 	</html>
+	<suspend />
 
 	<term label="termEOS_${1}" cond="condition.${1}_term">${3}</term>
 snippet quota
