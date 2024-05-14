@@ -937,7 +937,9 @@ def MakePercentage():
     attrs = dict(optional=1,
                  uses="autosum.5",
                  fwidth="3",
-                 amount="100")
+                 amount="100",
+                 size="3",
+                 verify="range(0,100)")
 
     comment = "@(hInstrText_seh)"
     if hasCol:
