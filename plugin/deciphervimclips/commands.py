@@ -194,17 +194,15 @@ def Case():
             <case label="c99" cond="1">BAD PIPE</case>
         </pipe>
     """
-    print('test')
+    cases = deciphervimclips.cell_factory( get_current_range(), "case", "p", attrs={'cond': ''} )
 
-    cases = deciphervimclips.cell_factory( get_current_range(), "case", "c", attrs={'cond': ''} )
-
-    cases.append("""  <case label="c99" cond="1">BAD PIPE</case>""")
+    cases.append("""  <case label="p99" cond="1">BAD PIPE</case>""")
 
     cases = ['<pipe label="" capture="">'] + cases + ['</pipe>']
 
-    # set_current_range( cases )
+    set_current_range( cases )
 
-    print(dir(vim.current.range.start))
+    # print(dir(vim.current.range.start))
     # cursor = vim.current.window.cursor
     # vim.current.window.cursor = cursor[0], cursor[1] + 12
 
@@ -953,7 +951,9 @@ def MakePercentage():
     output = deciphervimclips.element_factory(get_current_range(),
                                     attrs=attrs,
                                     elType="number",
-                                    comment=comment)
+                                    comment=comment,
+                                    setZero=True)
 
     set_current_range( output )
     vim.current.window.cursor = position
+

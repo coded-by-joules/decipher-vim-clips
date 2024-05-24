@@ -6,7 +6,7 @@ import re
 def test():
     print('wow')
 
-def element_factory(selection, elType='radio', comment='', attrs=None):
+def element_factory(selection, elType='radio', comment='', attrs=None, setZero=False):
     """Return an xml v2-Element as a list of strings
 
     Args:
@@ -44,14 +44,14 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
                           "  <title>%(title)s</title>",
                           "%(selection)s",
                           "</%(elType)s>",
-                          "<suspend/>"))
+                          "<suspend/>\n"))
     if hiddenQ:
         template = '\n'.join(("<%(elType)s\n  label=\"%(label)s\"%(extras)s>",
                               "  <title>%(title)s</title>",
                               "  <exec>\n  </exec>",
                               "%(selection)s",
                               "</%(elType)s>",
-                              "<suspend/>"))
+                              "<suspend/>\n"))
 
     if selection.find("<comment") == -1 and not hiddenQ:
         selection = "  <comment>%s</comment>\n" % comment + selection
@@ -80,6 +80,11 @@ def element_factory(selection, elType='radio', comment='', attrs=None):
                                 title=title,
                                 selection=selection,
                                 extras=extras))).split("\n")
+
+    if setZero:
+        element.extend(('<exec>',
+                        'setZero(%s)' % label,
+                        '</exec>'))
 
     return element
 
