@@ -39,6 +39,17 @@ snippet js
 	</style>
 	${2}
 
+snippet question.footer
+	<style name="question.footer" mode="after"><![CDATA[
+	<style>
+	</style>
+
+	<script>
+	$ (document).ready(function () {
+		${1}
+	});
+	</script>
+	]]></style>
 #
 # Common Text
 #
@@ -84,7 +95,7 @@ snippet virtual
 	</virtual>
 	${2}
 snippet term
-	<term cond="${3:foo}">${1:bar}: ${2:baz}</term>
+	<term cond="${3:Q1.r2}" label="term_${1:Q1}">Terminate ${1: Q1}: ${2: None of the above selected}</term>
 snippet softterm
 	<condition label="${1}_term" cond="${2}" />
 	<html label="SoftTerm_${1}" cond="qTesting.r1 and condition.${1}_term" where="survey" translateable="0">

@@ -879,6 +879,22 @@ def UnderlineText():
 
     set_current_range([line.replace(selection, "<u>%s</u>" % selection)])
 
+def SuperscriptText():
+    """
+    """
+    selection = GetRange()
+    line = ''.join(get_current_range())
+
+    set_current_range([line.replace(selection, "<sup>%s</sup>" % selection)])
+
+def SubscriptText():
+    """
+    """
+    selection = GetRange()
+    line = ''.join(get_current_range())
+
+    set_current_range([line.replace(selection, "<sub>%s</sub>" % selection)])
+
 def MakeRanksort():
     """
     """
