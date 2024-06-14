@@ -1,6 +1,5 @@
 snippet rel
 	[rel ${1}]${2}
-
 snippet note
 	<note>${1:START COMMENT}</note>
 snippet static
@@ -11,6 +10,17 @@ snippet cdata
 	]]>
 
 #
+# html
+#
+snippet	br
+	<br />
+snippet brbr
+	<br /><br />
+snippet popup
+	<a href="#popup-${1:img1}" class="popup-link">(POP-UP LINK HERE)</a>
+	<div id="popup-${1}" class="popup mfp-hide" style="max-width:960px">(POP-UP CONTENT HERE)</div>
+
+#
 # styles
 #
 snippet question.after
@@ -18,7 +28,7 @@ snippet question.after
 	  <![CDATA[
 	    var qn = ${jsexport()}; //json object
 
-	    var $qn = $ ("#question_" + qn.label);
+	    var $qn = \$ ("#question_" + qn.label);
 	    ${1://some code}
 	  ]]>
 	</style>
@@ -45,7 +55,7 @@ snippet question.footer
 	</style>
 
 	<script>
-	$ (document).ready(function () {
+	\$ (document).ready(function () {
 		${1}
 	});
 	</script>

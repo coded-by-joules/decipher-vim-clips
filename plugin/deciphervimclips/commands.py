@@ -10,6 +10,11 @@ else:
     from urllib.parse import quote
 
 
+def python_input(message):
+    vim.command('call inputsave()')
+    vim.command("let user_input = input('" + message + ": ')")
+    vim.command('call inputrestore()')
+    return vim.eval('user_input')
 
 def get_current_range():
     return vim.current.range[:]
@@ -566,11 +571,6 @@ def MainMakeOrs():
         return condString
 
 
-    def python_input(message):
-        vim.command('call inputsave()')
-        vim.command("let user_input = input('" + message + ": ')")
-        vim.command('call inputrestore()')
-        return vim.eval('user_input')
 
     try:
         label     = python_input("Question Label")
@@ -972,4 +972,33 @@ def MakePercentage():
 
     set_current_range( output )
     vim.current.window.cursor = position
+
+def GetErrorFromList():
+    errorList = ("1. valueAtMost - Sorry, but the value must be no more than $(max).",
+                 "2. valueAtLeast - Sorry, but the value must be at least $(min).",
+                 "3. point-mismatch - Your total must equal $(sum) exactly. You have entered $(points).",
+                 "4. noAnswerSelected - Please select an answer.",
+                 "5. textNoAnswerSelected - Please provide an answer",
+                 "6. notWhole - Please specify a whole number.",
+                 "7. select.minranks - Please rate at least $(atleast) items (you rated only $(count))",
+                 "8. duplicate - Duplicated answers, select each $(what) only once",
+                 "9. extraInfo - Please specify the required extra information.",
+                 "10. extraSelect - Since you specified extra information, please also select a corresponding answer.")
+    selOpt = python_input("Default error messages:\n\n%s\n\nEnter a number to add it to the text (1-10)" % "\n".join(errorList))
+
+    try:
+        errorSnippets = ('error(hlang.get("valueAtMost", max=str()))',
+                         'error(hlang.get("valueAtLeast", min=str()))',
+                         'error(hlang.get("point-mismatch", sum=str(), points=str()))',
+                         'error(hlang.get("noAnswerSelected"))',
+                         'error(hlang.get("textNoAnswerSelected"))',
+                         'error(hlang.get("notWhole"))',
+                         'error(hlang.get("select.minranks", atleast=str(), count=str()))',
+                         'error(hlang.get("duplicate", what=str()))',
+                         'error(hlang.get("extraInfo"))',
+                         'error(hlang.get("extraSelect"))')
+
+        vim.current.line = errorSnippets[int(selOpt) - 1]
+    except:
+        print("Please enter a number between 1 to 10")
 

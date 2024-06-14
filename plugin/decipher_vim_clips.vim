@@ -63,7 +63,7 @@ nmap <leader>nu  <Esc>:.,$s'\v(^\d+) '\1. 'gc<CR>
 nmap <leader>le  <Esc>:.,$s'\v(^[A-Z]+) '\1. 'gc<CR>
 nmap <leader>va  <Esc>:call Validate()<Esc>
 nmap <leader>cb  <Esc>:call CommentBlocks()<Esc>
-
+nmap <leader>pe  <Esc>:call SelectError()<Cr> 
 
 " Visual Mode Mappings
 vmap <leader>ro  <Esc>:call Rows()<CR>
@@ -744,5 +744,13 @@ except Exception as e:
 EOF
 endfunction
 
+function! SelectError()
+exec s:python_until_eof
+try:
 
+    commands.GetErrorFromList()
 
+except Exception as e:
+    print(e)
+EOF
+endfunction
