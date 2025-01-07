@@ -619,3 +619,32 @@ snippet starrating
 	  <uses>starrating.${1:1}</uses>
 	  <starrating:tooltips>${2:1}</starrating:tooltips>
 	${3}
+
+#
+# MAC snippets
+snippet MAC_sectiontime
+	<float 
+	  label="x_${1}_DURATION_start"
+	  size="20"
+	  translateable="0"
+	  where="none">
+	  <title>Total time start</title>
+	</float>
+
+	<suspend/>
+
+	${3}
+
+	<number 
+	  label="x_${1}_DURATION"
+	  size="20"
+	  translateable="0"
+	  where="execute,survey,report">
+	  <title>Total time spent in ${2}</title>
+	  <exec>
+	x_${1}_DURATION.val  = int(round((timeSpent() - x_${1}_DURATION_start.ival),0))
+	  </exec>
+
+	</number>
+
+	<suspend/>

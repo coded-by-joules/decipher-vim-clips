@@ -962,7 +962,7 @@ def MakePercentage():
         attrs["grouping"] = "cols"
 
     attrs["autosum:postText"] = "%"
-    attrs["ss:listDisplay"] = "1"
+    attrs["ss:listDisplay"] = "0"
 
     output = deciphervimclips.element_factory(get_current_range(),
                                     attrs=attrs,
