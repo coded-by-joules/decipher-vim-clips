@@ -237,7 +237,7 @@ def Resource():
     """
     lines = [line for line in get_current_range() if line.strip()]
 
-    label_rgx = re.compile('^(?P<label>\w*)\. (?P<text>.*)\s*$')
+    label_rgx = re.compile(r'^(?P<label>\w*)\. (?P<text>.*)\s*$')
 
     resTemplate   = '<res label="{label}">{text}</res>'
 
@@ -498,7 +498,7 @@ def MainMakeOrs():
             raise SyntaxError("Cannot have multiple dashes in range")
 
         firstChar = indices[0]
-        elementTest  = re.sub('[-,\s]', '', indices)
+        elementTest  = re.sub(r'[-,\s]', '', indices)
         indices = (i.strip() for i in indices.split(','))
         joinType = ', ' if joinType == ',' else ' %s ' % joinType
 
@@ -758,12 +758,12 @@ def AddAlts():
 
     selection = '\n'.join(get_current_range())
 
-    rgxTemplate = "(?P<open><({elements}).*?>)(?P<text>.*?)(?P<close></({elements})\s*?>)"
+    rgxTemplate = r"(?P<open><({elements}).*?>)(?P<text>.*?)(?P<close></({elements})\s*?>)"
     cell_rgx  = re.compile(rgxTemplate.format(elements='|'.join(ELEMENTS)), re.DOTALL)
     title_rgx = re.compile(rgxTemplate.format(elements='title'), re.DOTALL)
 
-    cellSub  = "\g<open><alt>\g<text></alt>\g<text>\g<close>"
-    titleSub = "\g<open>\g<text>\g<close>\n  <alt>\g<text></alt>"
+    cellSub  = r"\g<open><alt>\g<text></alt>\g<text>\g<close>"
+    titleSub = r"\g<open>\g<text>\g<close>\n  <alt>\g<text></alt>"
 
     selection = cell_rgx.sub(cellSub, selection)
     selection = title_rgx.sub(titleSub, selection)
@@ -788,7 +788,7 @@ def Strip():
 
     ELEMENTS = ('row', 'col', 'choice', 'group')
 
-    text_rgx = re.compile('\s*<({elements}).*?>(?P<text>.*?)</({elements}).*'.format(elements='|'.join(ELEMENTS)))
+    text_rgx = re.compile(r'\s*<({elements}).*?>(?P<text>.*?)</({elements}).*'.format(elements='|'.join(ELEMENTS)))
 
     output = []
 

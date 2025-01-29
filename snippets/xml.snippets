@@ -26,7 +26,7 @@ snippet popup
 snippet question.after
 	<style name="question.after" wrap="ready">
 	  <![CDATA[
-	    var qn = ${jsexport()}; //json object
+	    var qn = \${jsexport()}; //json object
 
 	    var $qn = \$ ("#question_" + qn.label);
 	    ${1://some code}
@@ -632,6 +632,9 @@ snippet MAC_sectiontime
 	</float>
 
 	<suspend/>
+	<exec>
+	x_${1}_DURATION_start.val = timeSpent()
+	</exec>
 
 	${3}
 
