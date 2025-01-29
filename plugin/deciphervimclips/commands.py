@@ -119,7 +119,7 @@ def Rows():
 
         <row label="r1">Spam</row>
     """
-    set_current_range( deciphervimclips.cell_factory( get_current_range(), "row", "r" ) + ['\n'] )
+    set_current_range( deciphervimclips.cell_factory( get_current_range(), "row", "r" ) )
 
 def Cols():
     """
@@ -131,7 +131,7 @@ def Cols():
 
         <col label="c2">Ham</col>
     """
-    set_current_range( deciphervimclips.cell_factory( get_current_range(), "col", "c" ) + ['\n'] )
+    set_current_range( deciphervimclips.cell_factory( get_current_range(), "col", "c" ) )
 
 
 def Choice():
@@ -144,7 +144,7 @@ def Choice():
 
         <choice label="ch3">Eggs</choice>
     """
-    set_current_range( deciphervimclips.cell_factory( get_current_range(), "choice", "ch") + ['\n'] )
+    set_current_range( deciphervimclips.cell_factory( get_current_range(), "choice", "ch")  )
 
 
 def Rates():
