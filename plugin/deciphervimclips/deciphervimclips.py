@@ -40,21 +40,21 @@ def element_factory(selection, elType='radio', comment='', attrs=None, setZero=F
     # check if the question will be a hidden variable
     hiddenQ = "hidden:" in title or "HIDDEN:" in title
 
-    template = '\n'.join(("<%(elType)s\n  label=\"%(label)s\"%(extras)s>",
-                          "  <title>%(title)s</title>",
+    template = '\n'.join(("<%(elType)s\n\tlabel=\"%(label)s\"%(extras)s>",
+                          "\t<title>%(title)s</title>",
                           "%(selection)s",
                           "</%(elType)s>",
                           "<suspend/>\n"))
     if hiddenQ:
-        template = '\n'.join(("<%(elType)s\n  label=\"%(label)s\"%(extras)s>",
-                              "  <title>%(title)s</title>",
-                              "  <exec>\n  </exec>",
+        template = '\n'.join(("<%(elType)s\n\tlabel=\"%(label)s\"%(extras)s>",
+                              "\t<title>%(title)s</title>",
+                              "\t<exec>\n\t</exec>",
                               "%(selection)s",
                               "</%(elType)s>",
                               "<suspend/>\n"))
 
     if selection.find("<comment") == -1 and not hiddenQ:
-        selection = "  <comment>%s</comment>\n" % comment + selection
+        selection = "\t<comment>%s</comment>\n" % comment + selection
 
     extras = ''
 
@@ -73,7 +73,7 @@ def element_factory(selection, elType='radio', comment='', attrs=None, setZero=F
         attrs["cs:scr"] = 1
 
     if attrs:
-        extras = '\n  ' + '\n  '.join('%s="%s"' % (k, v) for k, v in attrs.items())
+        extras = '\n\t' + '\n\t'.join('%s="%s"' % (k, v) for k, v in attrs.items())
 
     element = (template % (dict(elType=elType,
                                 label=label,
@@ -100,7 +100,7 @@ def cell_factory(selection, cellType, prefix='', attrs=None):
     Return:
         list. List of strings making up the formatted v2-Cells
     """
-    cellTemplate = ('  <%(cellType)s label="%(label)s">'
+    cellTemplate = ('\t<%(cellType)s label="%(label)s">'
                     '%(cell)s'
                     '</%(cellType)s>')
 

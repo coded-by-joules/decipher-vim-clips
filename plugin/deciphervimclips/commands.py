@@ -201,7 +201,7 @@ def Case():
     """
     cases = deciphervimclips.cell_factory( get_current_range(), "case", "p", attrs={'cond': ''} )
 
-    cases.append("""  <case label="p99" cond="1">BAD PIPE</case>""")
+    cases.append("""\t<case label="p99" cond="1">BAD PIPE</case>""")
 
     cases = ['<pipe label="" capture="">'] + cases + ['</pipe>']
 
